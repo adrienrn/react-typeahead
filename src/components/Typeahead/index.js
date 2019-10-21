@@ -62,21 +62,20 @@ export default function Typeahead({
 
     // Mock a query.
     if (value) {
-      if (value.toLowerCase().slice(0, 3) === 'cal') {
-        dataSource.query(value).then((matches) => {
-          dispatchHighlightedMatch({
-            type: 'MATCHES_SET',
-            payload: matches,
-          });
-        })
+      dataSource.query(value).then((matches) => {
+        if (0 === matches.length) {
+          // We want to do nothing and allow the user to hit search. However, if you
+          // want to display an error or not found message, you could dispatch an
+          // action here.
+          return matches;
+        }
 
-        return;
-      }
+        dispatchHighlightedMatch({
+          type: 'MATCHES_SET',
+          payload: matches,
+        });
+      });
 
-      // Mock a failed request.
-      // We want to do nothing and allow the user to hit search. However, if you
-      // want to display an error or not found message, you could dispatch an
-      // action here.
       return;
     }
 
@@ -84,7 +83,7 @@ export default function Typeahead({
     dispatchHighlightedMatch({
       type: 'MATCHES_RESET',
     });
-  }, [value]);
+  }, [dataSource, value]);
 
   return (
     <div className={s['typeahead']}>
@@ -105,10 +104,10 @@ export default function Typeahead({
         value={value}
       />
       {state.matches.length ? (
-        <div>
-          <ul>
+        <div className={s['typeahead__sheet']}>
+          <ul className={s['typeahead__match']}>
             {state.matches.map((match, matchIndex) => (
-              <li key={match.item.value} className={cx(s['typeahead__match__entry'], {
+              <li key={match.item.id} className={cx(s['typeahead__match__entry'], {
                 [s['typeahead__match__entry--highlighted']]: (state.highlightedMatch === matchIndex),
               })}>
                 {match.item.label}

@@ -1,4 +1,33 @@
-.typeahead {}
+.typeahead {
+  --color-surface--500: #ffffff;
+  --box-radius--500: 4px;
+
+  border-radius: var(--box-radius--500);
+  box-shadow: 0 5px 40px rgba(0, 0, 0, .2);
+  position: relative;
+}
+
+.typeahead input[type="text"] {
+  border-color: transparent;
+  border-radius: var(--box-radius--500);
+  font-size: 1.1rem;
+  padding: .66rem;
+}
+
+.typeahead__sheet {
+  background-color: var(--color-surface--500);
+  left: 0;
+  max-height: 15rem;
+  overflow-y: scroll;
+  position: absolute;
+  right: 0;
+}
+
+.typeahead__match {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
 
 .typeahead__match__entry--highlighted {
   color: blue;

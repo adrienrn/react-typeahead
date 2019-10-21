@@ -4,9 +4,13 @@
   "private": true,
   "dependencies": {
     "classnames": "^2.2.6",
+    "fuse.js": "^3.4.5",
+    "lodash.clonedeep": "^4.5.0",
+    "lodash.debounce": "^4.0.8",
     "react": "^16.10.2",
     "react-dom": "^16.10.2",
-    "react-scripts": "3.2.0"
+    "react-scripts": "3.2.0",
+    "uuid": "^3.3.3"
   },
   "scripts": {
     "start": "react-scripts start",

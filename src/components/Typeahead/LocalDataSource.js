@@ -1,3 +1,5 @@
+import Fuse from 'fuse.js';
+
 export function createLocalDataSource({
   data,
 })
@@ -16,27 +18,21 @@ class LocalDataSource
 {
   constructor(data)
   {
-    this.data = data;
+    this.fuzzyMatcher = new Fuse(data, {
+      includeMatches: true,
+      keys: [
+        'label',
+      ],
+      minMatchCharLength: 1,
+      shouldSort: true,
+      threshold: 0.42,
+    });
   }
 
   query(value)
   {
     return new Promise((resolve, reject) => {
-      const matches = this.data.map((label) => {
-        // Crappy slug transform for now.
-        const slug = label.toLowerCase().replace(' ', '--');
-
-        return {
-          match: label.slice(0, 3),
-          score: Math.random(0, 1),
-          item: {
-            label: label,
-            value: slug,
-          }
-        };
-      }).sort((a, b) => {
-        return a.score >= b.score ? 1 : -1;
-      }).slice(0, 5);
+      const matches = this.fuzzyMatcher.search(value);
 
       return resolve(matches);
     });
