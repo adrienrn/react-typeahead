@@ -9,6 +9,7 @@ function App() {
   return (
     <Layout>
       <Typeahead
+        name="search"
         placeholder="try: California"
       />
     </Layout>

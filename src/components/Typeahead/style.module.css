@@ -1,0 +1,5 @@
+.typeahead {}
+
+.typeahead__match__entry--highlighted {
+  color: blue;
+}
