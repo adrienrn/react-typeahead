@@ -8,7 +8,7 @@ export function Layout({
 {
   return (
     <div className={s['layout__wrapper']}>
-      <main className={s['layout__main']}>
+      <main className={s['layout__content']}>
         {children}
       </main>
     </div>

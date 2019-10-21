@@ -4,7 +4,6 @@ export function createLocalDataSource({
   data,
 })
 {
-
   return new LocalDataSource(data);
 }
 
@@ -23,6 +22,7 @@ class LocalDataSource
       keys: [
         'label',
       ],
+      location: 0,
       minMatchCharLength: 1,
       shouldSort: true,
       threshold: 0.42,

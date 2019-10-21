@@ -1,6 +1,12 @@
 .layout__wrapper {
   align-items: center;
   display: grid;
-  min-height: 100vh;
+  grid-template-columns: 1fr;
   justify-content: center;
+  min-height: 100vh;
+}
+
+.layout__content {
+  max-width: 420px;
+  padding: 3rem;
 }
