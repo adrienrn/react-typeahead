@@ -1,7 +1,8 @@
 import React from 'react';
 
 import { Layout } from './components/App/Layout';
-import Typeahead from './components/Typeahead';
+import Typeahead, { createLocalDataSource } from './components/Typeahead';
+import data from './data.json';
 
 import './App.css';
 
@@ -9,6 +10,9 @@ function App() {
   return (
     <Layout>
       <Typeahead
+        dataSource={createLocalDataSource({
+          data,
+        })}
         name="search"
         placeholder="try: California"
       />

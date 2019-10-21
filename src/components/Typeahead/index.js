@@ -1,9 +1,9 @@
 import React, { useEffect, useReducer, useState, } from 'react';
 import cx from 'classnames';
 
-import MOCK_DATA from './data.js';
-
 import s from './style.module.css';
+
+export { createLocalDataSource } from './LocalDataSource.js';
 
 const CONTROL_KEYS = {
   37: false,
@@ -48,6 +48,7 @@ function highlightedReducer(state, action)
 }
 
 export default function Typeahead({
+  dataSource,
   name,
   placeholder,
   setFieldValue,
@@ -61,11 +62,21 @@ export default function Typeahead({
 
     // Mock a query.
     if (value) {
-      dispatchHighlightedMatch({
-        type: 'MATCHES_SET',
-        payload: MOCK_DATA,
-      });
+      if (value.toLowerCase().slice(0, 3) === 'cal') {
+        dataSource.query(value).then((matches) => {
+          dispatchHighlightedMatch({
+            type: 'MATCHES_SET',
+            payload: matches,
+          });
+        })
 
+        return;
+      }
+
+      // Mock a failed request.
+      // We want to do nothing and allow the user to hit search. However, if you
+      // want to display an error or not found message, you could dispatch an
+      // action here.
       return;
     }
 
