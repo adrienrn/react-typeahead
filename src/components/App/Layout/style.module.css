@@ -1,0 +1,6 @@
+.layout__wrapper {
+  align-items: center;
+  display: grid;
+  min-height: 100vh;
+  justify-content: center;
+}
