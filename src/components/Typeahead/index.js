@@ -3,6 +3,7 @@ import cx from 'classnames';
 
 import reducer, { initialState, } from './Reducer.js';
 import { highlightMatch } from './Utils.js';
+import { ClearIcon, SearchIcon } from '../Icon';
 
 import s from './style.module.css';
 
@@ -24,6 +25,7 @@ const CONTROL_KEYS = {
 
 export default function Typeahead({
   dataSource,
+  id,
   name,
   placeholder,
   setFieldValue,
@@ -42,14 +44,14 @@ export default function Typeahead({
     // Synchronize with the value.
     setValue(state.selectedMatch.label);
 
-    // Ensure the field is focused.
+    // Ensure the field is focused feels nice when using with the mouse.
     inputRef.current.focus();
   }, [state.selectedMatch])
 
-  /**
-   * Make the call to the data source after the value has changed.
-   */
   useEffect(() => {
+    // Let the value travel upwards, usually to a form.
+    setFieldValue(name, value);
+
     if (!value) {
       dispatch({type: 'MATCHES_RESET'});
 
@@ -84,25 +86,41 @@ export default function Typeahead({
 
   return (
     <div className={s['typeahead']}>
-      <input
-        ref={inputRef}
-        name={name}
-        placeholder={placeholder}
-        onChange={(event) => setValue(event.currentTarget.value)}
-        onKeyDown={(event) => {
-          if (undefined === CONTROL_KEYS[event.keyCode]) {
-            return;
-          }
+      <div className={s['typeahead__control']}>
+        <label htmlFor={id}>
+          <SearchIcon />
+        </label>
+        <input
 
-          dispatch(CONTROL_KEYS[event.keyCode]);
-        }}
-        type="text"
-        value={value}
-      />
+          ref={inputRef}
+          id={id}
+          name={name}
+          placeholder={placeholder}
+          onChange={(event) => setValue(event.currentTarget.value)}
+          onKeyDown={(event) => {
+            if (undefined === CONTROL_KEYS[event.keyCode]) {
+              return;
+            }
+
+            dispatch(CONTROL_KEYS[event.keyCode]);
+          }}
+          type="text"
+          value={value}
+        />
+        {value ? (
+          <button
+            className={s['typeahead__button-clear']}
+            onClick={(event) => setValue('')}
+            type="button"
+          >
+            <ClearIcon />
+          </button>
+        ) : null}
+      </div>
 
       {!state.selectedMatch && state.matches.length ? (
         <div className={s['typeahead__sheet']} style={{
-          overflowY: (5 < state.matches.length) ? 'scroll' : 'none',
+          overflowY: (5 < state.matches.length) ? 'scroll' : 'auto',
         }}>
           <div className={s['typeahead__sheet__body']}>
             <ul className={s['typeahead__match']}>
