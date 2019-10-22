@@ -1,25 +1,30 @@
 import React from 'react';
-import logo from './logo.svg';
+
+import { Layout } from './components/App/Layout';
+import Typeahead, { createLocalDataSource } from './components/Typeahead';
+
+import data from './data.json';
+
 import './App.css';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Layout>
+      <form onSubmit={event => event.preventDefault()}>
+        <Typeahead
+          dataSource={createLocalDataSource({
+            data,
+          })}
+          id="demo-form__s"
+          name="s"
+          setFieldValue={(name, value) => {
+            // Does nothing as is, but in a typical form, this method should be
+            // used to make the value travel upwards to the form.
+          }}
+          placeholder="Search for starberry, cocomber..."
+        />
+      </form>
+    </Layout>
   );
 }
 

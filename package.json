@@ -1,11 +1,15 @@
 {
-  "name": "create-react-app",
+  "name": "react-typeahead",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "classnames": "^2.2.6",
+    "fuse.js": "^3.4.5",
+    "lodash.debounce": "^4.0.8",
     "react": "^16.10.2",
     "react-dom": "^16.10.2",
-    "react-scripts": "3.2.0"
+    "react-scripts": "3.2.0",
+    "slugify": "^1.3.5"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -27,5 +31,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "prettier": "1.18.2"
   }
 }

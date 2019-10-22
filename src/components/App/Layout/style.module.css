@@ -1,0 +1,8 @@
+.layout__wrapper {
+}
+
+.layout__content {
+  margin: auto;
+  max-width: 520px;
+  padding: 3rem;
+}

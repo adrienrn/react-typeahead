@@ -1,0 +1,83 @@
+.typeahead {
+  position: relative;
+}
+
+.typeahead__control {
+  align-items: center;
+  border: 1px solid #EBEBEB;
+  border-bottom-width: 3px;
+  border-radius: var(--box-radius--500);
+  box-shadow: var(--elevation--500);
+  display: flex;
+  padding: 0 .375rem;
+  position: relative;
+  z-index: 1;
+}
+
+.typeahead svg {
+  display: block;
+  fill: var(--color-text--300);
+  height: 18px;
+  width: 18px;
+}
+
+.typeahead label {
+  padding: .75rem .375rem;
+}
+
+.typeahead input[type="text"] {
+  border-color: transparent;
+  border-radius: var(--box-radius--500);
+  color: var(--color-text--500);
+  display: block;
+  font-size: 1.1rem;
+  font-weight: bold;
+  min-width: 0; /* Browser-related reset for flex to work nicely */
+  padding: .75rem .375rem;
+  width: 100%;
+}
+
+.typeahead__button-clear {
+  background: none;
+  border-color: transparent;
+  padding: .75rem .375rem;
+}
+
+.typeahead__sheet {
+  background-color: var(--color-surface--500);
+  border: 1px solid #EBEBEB;
+  border-top: 0;
+  border-bottom-left-radius: var(--box-radius--500);
+  border-bottom-right-radius: var(--box-radius--500);
+  box-shadow: var(--elevation--300);
+  left: 0;
+  margin-top: -2px;
+  max-height: 14.1rem;
+  position: absolute;
+  right: 0;
+  z-index: 0;
+}
+
+.typeahead__sheet__body {
+}
+
+.typeahead__match {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.typeahead__match__entry {
+  cursor: pointer;
+  font-size: 1.1rem;
+  padding: .75rem .75rem;
+}
+
+.typeahead__match__entry b {
+  color: var(--color-secondary--500);
+  font-weight: 600;
+}
+
+.typeahead__match__entry--highlighted {
+  background-color: var(--color-secondary--100);
+}

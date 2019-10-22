@@ -1,13 +1,48 @@
+@import-normalize;
+
+:root {
+  --color-primary--500: #19439e;
+  --color-secondary--500: #fca311;
+  --color-secondary--300: #ffeebf;
+  --color-secondary--100: #fffbf0;
+  --color-surface--500: #ffffff;
+  --color-text--300: #989bae;
+  --color-text--500: #1b2d5e;
+  --box-radius--500: 4px;
+  --elevation--500: 0 4px 10px rgba(0, 0, 75, .055);
+  --elevation--300: 0 4px 10px rgba(0, 0, 75, .035);
+  --font-primary: Poppins, Helvetica, Arial, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
 body {
+  color: var(--color-text--500);
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
+  font-family: var(--font-primary);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  font-size: 15px;
+  line-height: 1.42;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+
+button {
+  cursor: pointer;
+}
+
+input[type="text"] {
+  font-family: var(--font-primary);
+}
+
+input[type="text"]::placeholder {
+  color: var(--color-text--300);
+  opacity: 1;
+}
+
