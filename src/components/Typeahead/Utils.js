@@ -1,3 +1,8 @@
+/**
+ * Highlight regions (chars) that have matched and return an HTML string.
+ *
+ * https://github.com/krisk/Fuse/issues/6
+ */
 export function highlightMatch(text, regions) {
   const result = [];
   for (let regionIndex = 0; regionIndex < regions.length; ++regionIndex) {
