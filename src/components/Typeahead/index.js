@@ -1,7 +1,7 @@
-import React, { useEffect, useReducer, useRef, useState, } from 'react';
+import React, { useEffect, useReducer, useRef, useState } from 'react';
 import cx from 'classnames';
 
-import reducer, { initialState, } from './Reducer.js';
+import reducer, { initialState } from './Reducer.js';
 import { highlightMatch } from './Utils.js';
 import { ClearIcon, SearchIcon } from '../Icon';
 
@@ -11,7 +11,7 @@ export { createLocalDataSource } from './LocalDataSource.js';
 
 const CONTROL_KEYS = {
   13: {
-    'type': 'MATCH_SET',
+    type: 'MATCH_SET',
   },
   37: false,
   38: {
@@ -29,8 +29,7 @@ export default function Typeahead({
   name,
   placeholder,
   setFieldValue,
-})
-{
+}) {
   const [value, setValue] = useState('');
   const [state, dispatch] = useReducer(reducer, initialState);
 
@@ -46,24 +45,24 @@ export default function Typeahead({
 
     // Ensure the field is focused feels nice when using with the mouse.
     inputRef.current.focus();
-  }, [state.selectedMatch])
+  }, [state.selectedMatch]);
 
   useEffect(() => {
     // Let the value travel upwards, usually to a form.
     setFieldValue(name, value);
 
     if (!value) {
-      dispatch({type: 'MATCHES_RESET'});
+      dispatch({ type: 'MATCHES_RESET' });
 
       return;
     }
 
     if (state.selectedMatch && value !== state.selectedMatch.label) {
-      dispatch({type: 'MATCH_UNSET'});
+      dispatch({ type: 'MATCH_UNSET' });
     }
 
     if (!state.selectedMatch && value) {
-      dataSource.query(value).then((matches) => {
+      dataSource.query(value).then(matches => {
         if (0 === matches.length) {
           // We want to do nothing and allow the user to hit search. However, if you
           // want to display an error or not found message, you could dispatch an
@@ -81,7 +80,6 @@ export default function Typeahead({
 
       return;
     }
-
   }, [value]);
 
   return (
@@ -91,13 +89,12 @@ export default function Typeahead({
           <SearchIcon />
         </label>
         <input
-
           ref={inputRef}
           id={id}
           name={name}
           placeholder={placeholder}
-          onChange={(event) => setValue(event.currentTarget.value)}
-          onKeyDown={(event) => {
+          onChange={event => setValue(event.currentTarget.value)}
+          onKeyDown={event => {
             if (undefined === CONTROL_KEYS[event.keyCode]) {
               return;
             }
@@ -110,34 +107,40 @@ export default function Typeahead({
         {value ? (
           <button
             className={s['typeahead__button-clear']}
-            onClick={(event) => setValue('')}
-            type="button"
-          >
+            onClick={event => setValue('')}
+            type="button">
             <ClearIcon />
           </button>
         ) : null}
       </div>
 
       {!state.selectedMatch && state.matches.length ? (
-        <div className={s['typeahead__sheet']} style={{
-          overflowY: (5 < state.matches.length) ? 'scroll' : 'auto',
-        }}>
+        <div
+          className={s['typeahead__sheet']}
+          style={{
+            overflowY: 5 < state.matches.length ? 'scroll' : 'auto',
+          }}>
           <div className={s['typeahead__sheet__body']}>
             <ul className={s['typeahead__match']}>
               {state.matches.map((match, matchIndex) => (
-                <li key={match.item.id}
+                <li
+                  key={match.item.id}
                   className={cx(s['typeahead__match__entry'], {
-                    [s['typeahead__match__entry--highlighted']]: (state.highlightedMatch === matchIndex),
+                    [s['typeahead__match__entry--highlighted']]:
+                      state.highlightedMatch === matchIndex,
                   })}
-                  onMouseEnter={(event) => dispatch({
-                    type: 'HIGHLIGHT_MATCH_SET',
-                    payload: matchIndex,
-                  })}
-                  onClick={(event) => dispatch({type: 'MATCH_SET'})}
-                >
-                  <span dangerouslySetInnerHTML={{
-                    __html: highlightMatch(match.item.label, match.matches)
-                  }} />
+                  onMouseEnter={event =>
+                    dispatch({
+                      type: 'HIGHLIGHT_MATCH_SET',
+                      payload: matchIndex,
+                    })
+                  }
+                  onClick={event => dispatch({ type: 'MATCH_SET' })}>
+                  <span
+                    dangerouslySetInnerHTML={{
+                      __html: highlightMatch(match.item.label, match.matches),
+                    }}
+                  />
                 </li>
               ))}
             </ul>

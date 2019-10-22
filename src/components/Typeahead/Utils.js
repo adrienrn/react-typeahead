@@ -1,6 +1,4 @@
-
-export function highlightMatch(text, regions)
-{
+export function highlightMatch(text, regions) {
   const result = [];
   for (let regionIndex = 0; regionIndex < regions.length; ++regionIndex) {
     // Make a copy, shift() is modifying the array and that cost me 2h.
@@ -12,13 +10,13 @@ export function highlightMatch(text, regions)
     for (var i = 0; i < text.length; i++) {
       var char = text.charAt(i);
       if (pair && i === pair[0]) {
-        result.push('<b>')
+        result.push('<b>');
       }
 
       result.push(char);
 
       if (pair && i === pair[1]) {
-        result.push('</b>')
+        result.push('</b>');
         pair = matches.shift();
       }
     }

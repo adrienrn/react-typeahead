@@ -4,8 +4,7 @@ export const initialState = {
   selectedMatch: null,
 };
 
-export default function reducer(state, action)
-{
+export default function reducer(state, action) {
   switch (action.type) {
     case 'HIGHLIGHT_MATCH_DECREMENT':
       return {
@@ -15,7 +14,10 @@ export default function reducer(state, action)
     case 'HIGHLIGHT_MATCH_INCREMENT':
       return {
         ...state,
-        highlightedMatch: Math.min(state.matches.length - 1, state.highlightedMatch + 1),
+        highlightedMatch: Math.min(
+          state.matches.length - 1,
+          state.highlightedMatch + 1
+        ),
       };
     case 'HIGHLIGHT_MATCH_SET':
       return {

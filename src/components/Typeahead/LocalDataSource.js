@@ -1,9 +1,6 @@
 import Fuse from 'fuse.js';
 
-export function createLocalDataSource({
-  data,
-})
-{
+export function createLocalDataSource({ data }) {
   return new LocalDataSource(data);
 }
 
@@ -13,15 +10,11 @@ export function createLocalDataSource({
  * This data source is querying a local data array. We could imagine have an
  * another data source querying some API endpoint.
  */
-class LocalDataSource
-{
-  constructor(data)
-  {
+class LocalDataSource {
+  constructor(data) {
     this.fuzzyMatcher = new Fuse(data, {
       includeMatches: true,
-      keys: [
-        'label',
-      ],
+      keys: ['label'],
       location: 0,
       minMatchCharLength: 1,
       shouldSort: true,
@@ -29,8 +22,7 @@ class LocalDataSource
     });
   }
 
-  query(value)
-  {
+  query(value) {
     return new Promise((resolve, reject) => {
       const matches = this.fuzzyMatcher.search(value);
 

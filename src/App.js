@@ -12,7 +12,7 @@ function App() {
   // The base data is just an array of string. Mapping it to an array of objects
   // with a label and id, will make it easier to deal with duplicates, and keys,
   // and closer to what an API could return.
-  const mappedData = data.map((strValue) => {
+  const mappedData = data.map(strValue => {
     return {
       id: uuid(),
       label: strValue,
@@ -21,7 +21,7 @@ function App() {
 
   return (
     <Layout>
-      <form onSubmit={(event) => event.preventDefault()}>
+      <form onSubmit={event => event.preventDefault()}>
         <Typeahead
           dataSource={createLocalDataSource({
             data: mappedData,
