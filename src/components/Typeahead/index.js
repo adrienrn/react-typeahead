@@ -4,6 +4,7 @@ import cx from 'classnames';
 import reducer, { initialState } from './Reducer.js';
 import { highlightMatch } from './Utils.js';
 import { ClearIcon, SearchIcon } from '../Icon';
+import { useDebounce } from 'use-debounce';
 
 import s from './style.module.css';
 
@@ -35,6 +36,10 @@ export default function Typeahead({
   const [focus, setFocus] = useState(true);
   const [state, dispatch] = useReducer(reducer, initialState);
 
+  // Debouncing the value change to go easy on the data source that could call an API.
+  const [debouncedValue] = useDebounce(value, 250);
+
+  // Manage the focus / blur through a ref to the HTMLElement.
   const inputRef = useRef();
 
   useEffect(() => {
@@ -50,9 +55,6 @@ export default function Typeahead({
   }, [state.selectedMatch]);
 
   useEffect(() => {
-    // Let the value travel upwards, usually to a form.
-    setFieldValue(name, value);
-
     if (!value) {
       dispatch({ type: 'MATCHES_RESET' });
 
@@ -62,9 +64,14 @@ export default function Typeahead({
     if (state.selectedMatch && value !== state.selectedMatch.label) {
       dispatch({ type: 'MATCH_UNSET' });
     }
+  }, [value]);
 
-    if (!state.selectedMatch && value) {
-      dataSource.query(value).then(matches => {
+  useEffect(() => {
+    // Let the value travel upwards, usually to a form.
+    setFieldValue(name, debouncedValue);
+
+    if (!state.selectedMatch && debouncedValue) {
+      dataSource.query(debouncedValue).then(matches => {
         if (0 === matches.length) {
           // We want to do nothing and allow the user to hit search. However, if you
           // want to display an error or not found message, you could dispatch an
@@ -82,7 +89,7 @@ export default function Typeahead({
 
       return;
     }
-  }, [value]);
+  }, [debouncedValue]);
 
   return (
     <div className={s['typeahead']}>
@@ -119,7 +126,7 @@ export default function Typeahead({
           <button
             className={s['typeahead__button-clear']}
             onClick={event => setValue('')}
-            tabindex="-1"
+            tabIndex="-1"
             type="button">
             <ClearIcon />
           </button>
