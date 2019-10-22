@@ -13,6 +13,7 @@ const CONTROL_KEYS = {
   13: {
     type: 'MATCH_SET',
   },
+  27: true,
   37: false,
   38: {
     type: 'HIGHLIGHT_MATCH_DECREMENT',
@@ -31,6 +32,7 @@ export default function Typeahead({
   setFieldValue,
 }) {
   const [value, setValue] = useState('');
+  const [focus, setFocus] = useState(true);
   const [state, dispatch] = useReducer(reducer, initialState);
 
   const inputRef = useRef();
@@ -94,8 +96,17 @@ export default function Typeahead({
           name={name}
           placeholder={placeholder}
           onChange={event => setValue(event.currentTarget.value)}
+          onFocus={event => setFocus(true)}
+          onBlur={event => setFocus(false)}
           onKeyDown={event => {
             if (undefined === CONTROL_KEYS[event.keyCode]) {
+              return;
+            }
+
+            if (true === CONTROL_KEYS[event.keyCode]) {
+              // This feels a bit hacky, should be able to refactor this.
+              inputRef.current.blur();
+
               return;
             }
 
@@ -108,13 +119,14 @@ export default function Typeahead({
           <button
             className={s['typeahead__button-clear']}
             onClick={event => setValue('')}
+            tabindex="-1"
             type="button">
             <ClearIcon />
           </button>
         ) : null}
       </div>
 
-      {!state.selectedMatch && state.matches.length ? (
+      {focus && !state.selectedMatch && state.matches.length ? (
         <div
           className={s['typeahead__sheet']}
           style={{
