@@ -18,12 +18,12 @@ class LocalDataSource {
     // array of objects with unique ids (that are slugs) to handle duplicates.
     // Another strategy here would be to remove the duplicates.
     const slugifier = new Slugifier();
-    const mappedData = data.map((strValue) => {
+    const mappedData = data.map(strValue => {
       return {
         id: slugifier.generateSlug(strValue),
         label: strValue,
-      }
-    })
+      };
+    });
 
     this.fuzzyMatcher = new Fuse(mappedData, {
       includeMatches: true,
@@ -56,14 +56,12 @@ class LocalDataSource {
  * Ex: 3x generateSlug("Foo") would produce: "foo", "foo-1", "foo-2".
  */
 class Slugifier {
-  constructor()
-  {
+  constructor() {
     this.cache = {};
   }
 
-  generateSlug(strValue)
-  {
-    let slug = slugify(strValue, {lower: true});
+  generateSlug(strValue) {
+    let slug = slugify(strValue, { lower: true });
     if (!this.cache[strValue]) {
       this.cache[strValue] = 1;
 
