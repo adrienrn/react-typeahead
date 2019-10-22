@@ -1,6 +1,6 @@
 {
-  "name": "react-typeahead",
-  "version": "0.1.0",
+  "name": "@adrienrn/react-typeahead",
+  "version": "0.1.1",
   "private": true,
   "dependencies": {
     "classnames": "^2.2.6",
